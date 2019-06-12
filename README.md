@@ -15,7 +15,6 @@ docker-compose up
 ```
 
 Test account:
-
 * username: `admin`
 * password: `helloflask`
 
