@@ -1,5 +1,5 @@
 # blog_server
-
+[![Build Status](https://www.travis-ci.org/gumupaier/blog_server.svg?branch=master)](https://www.travis-ci.org/gumupaier/blog_server)
 
 *A blog server.*
 
