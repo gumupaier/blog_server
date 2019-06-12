@@ -1,0 +1,23 @@
+version: '3'
+services:
+  blog-server:
+    build: .
+    volumes:
+      - .:/work
+    environment:
+#      - DEBUG=true
+      - DEBUG_SERVER=false   # 用于服务器auto reload指定(非开发模式，请勿开启)
+      - DB_HOST=0.0.0.0
+#      - DB_HOST=mysql
+      - DB_NAME=blog
+      - DB_PASSWORD=123456
+      - DB_USER=root
+      - REDIS_HOST=redis
+    ports:
+      - 5000:5000
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    external: true

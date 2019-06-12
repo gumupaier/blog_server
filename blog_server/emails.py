@@ -10,7 +10,7 @@ from threading import Thread
 from flask import url_for, current_app
 from flask_mail import Message
 
-from bluelog.extensions import mail
+from blog_server.extensions import mail
 
 
 def _send_async_mail(app, message):

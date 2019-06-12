@@ -15,13 +15,13 @@ from flask_login import current_user
 from flask_sqlalchemy import get_debug_queries
 from flask_wtf.csrf import CSRFError
 
-from bluelog.blueprints.admin import admin_bp
-from bluelog.blueprints.auth import auth_bp
-from bluelog.blueprints.blog import blog_bp
-from bluelog.extensions import bootstrap, db, login_manager, csrf, ckeditor, mail, moment, toolbar, migrate
-from bluelog.models import Admin, Post, Category, Comment, Link
-from bluelog.settings import config
-
+from blog_server.blueprints.admin import admin_bp
+from blog_server.blueprints.auth import auth_bp
+from blog_server.blueprints.blog import blog_bp
+from blog_server.extensions import bootstrap, db, login_manager, csrf, ckeditor, mail, moment, toolbar, migrate
+from blog_server.models import Admin, Post, Category, Comment, Link
+from blog_server.settings import config
+import logging
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 
@@ -29,9 +29,8 @@ def create_app(config_name=None):
     if config_name is None:
         config_name = os.getenv('FLASK_CONFIG', 'development')
 
-    app = Flask('bluelog')
+    app = Flask('blog_server')
     app.config.from_object(config[config_name])
-
     register_logging(app)
     register_extensions(app)
     register_blueprints(app)
@@ -44,37 +43,41 @@ def create_app(config_name=None):
 
 
 def register_logging(app):
-    class RequestFormatter(logging.Formatter):
+    # class RequestFormatter(logging.Formatter):
+    #
+    #     def format(self, record):
+    #         record.url = request.url
+    #         record.remote_addr = request.remote_addr
+    #         return super(RequestFormatter, self).format(record)
+    #
+    # request_formatter = RequestFormatter(
+    #     '[%(asctime)s] %(remote_addr)s requested %(url)s\n'
+    #     '%(levelname)s in %(module)s: %(message)s'
+    # )
+    #
+    # formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    #
+    # file_handler = RotatingFileHandler(os.path.join(basedir, 'logs/blog_server.log'),
+    #                                    maxBytes=10 * 1024 * 1024, backupCount=10)
+    # print("*"*88)
+    # print(os.path.join(basedir, 'logs/blog_server.log'))
+    # file_handler.setFormatter(formatter)
+    # file_handler.setLevel(logging.INFO)
+    #
+    # mail_handler = SMTPHandler(
+    #     mailhost=app.config['MAIL_SERVER'],
+    #     fromaddr=app.config['MAIL_USERNAME'],
+    #     toaddrs=['ADMIN_EMAIL'],
+    #     subject='Bluelog Application Error',
+    #     credentials=(app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD']))
+    # mail_handler.setLevel(logging.ERROR)
+    # mail_handler.setFormatter(request_formatter)
+    #
+    # if not app.debug:
+    #     app.logger.addHandler(mail_handler)
+    #     app.logger.addHandler(file_handler)
 
-        def format(self, record):
-            record.url = request.url
-            record.remote_addr = request.remote_addr
-            return super(RequestFormatter, self).format(record)
-
-    request_formatter = RequestFormatter(
-        '[%(asctime)s] %(remote_addr)s requested %(url)s\n'
-        '%(levelname)s in %(module)s: %(message)s'
-    )
-
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-    file_handler = RotatingFileHandler(os.path.join(basedir, 'logs/bluelog.log'),
-                                       maxBytes=10 * 1024 * 1024, backupCount=10)
-    file_handler.setFormatter(formatter)
-    file_handler.setLevel(logging.INFO)
-
-    mail_handler = SMTPHandler(
-        mailhost=app.config['MAIL_SERVER'],
-        fromaddr=app.config['MAIL_USERNAME'],
-        toaddrs=['ADMIN_EMAIL'],
-        subject='Bluelog Application Error',
-        credentials=(app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD']))
-    mail_handler.setLevel(logging.ERROR)
-    mail_handler.setFormatter(request_formatter)
-
-    if not app.debug:
-        app.logger.addHandler(mail_handler)
-        app.logger.addHandler(file_handler)
+    pass
 
 
 def register_extensions(app):
@@ -188,7 +191,7 @@ def register_commands(app):
     @click.option('--comment', default=500, help='Quantity of comments, default is 500.')
     def forge(category, post, comment):
         """Generate fake data."""
-        from bluelog.fakes import fake_admin, fake_categories, fake_posts, fake_comments, fake_links
+        from blog_server.fakes import fake_admin, fake_categories, fake_posts, fake_comments, fake_links
 
         db.drop_all()
         db.create_all()
