@@ -1,5 +1,6 @@
 # blog_server
 
+
 *A blog server.*
 
 forked from [https://github.com/greyli/bluelog](https://github.com/greyli/bluelog)
@@ -19,3 +20,6 @@ Test account:
 * password: `helloflask`
 
 
+=======
+博客服务
+.
