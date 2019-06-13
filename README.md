@@ -19,6 +19,9 @@ Test account:
 * username: `admin`
 * password: `helloflask`
 
+自动构建
+![autobuild](https://github.com/gumupaier/blog_server/blob/master/images/autobuild.png)
+![travis](https://github.com/gumupaier/blog_server/blob/master/images/travis.png)
 
 =======
 博客服务
