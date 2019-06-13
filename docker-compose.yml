@@ -1,7 +1,8 @@
 version: '3'
 services:
   blog-server:
-    build: .
+#    build: .
+    image: gumupaier/blog_server
     volumes:
       - .:/work
     environment:
