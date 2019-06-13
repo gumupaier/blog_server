@@ -14,4 +14,6 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 script:
-  - docker build -t blog_server .
+  - docker build -t  blog_server .
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - docker push  blog_server
