@@ -16,4 +16,4 @@ env:
 script:
   - docker build -t  blog_server .
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
-  - docker push  blog_server
+  - docker push  $DOCKER_USER:blog_server
