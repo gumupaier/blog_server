@@ -14,7 +14,7 @@ env:
 #  - sudo mv docker-compose /usr/local/bin
 
 script:
-  - docker build -t  $DOCKER_USER:blog_server .
+  - docker build -t  $DOCKER_USER/blog_server .
   - echo $DOCKER_USER:blog_server
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
-  - docker push  $DOCKER_USER:blog_server
+  - docker push  $DOCKER_USER/blog_server
